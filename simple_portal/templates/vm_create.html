@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form method="POST" action="/api/create-vm">
+        <div>
+            <label for="vm_name">Name: </label>
+            <input id="vm_name" name="vm_name">
+        </div>
+        
+        <div>
+            <label for="vm_description">Description: </label>
+            <input id="vm_description" name="vm_description">
+        </div>
+        
+        <div>
+            <select name="node">
+                {% for node in nodes %}
+                    <option value="{{ node }}">{{ node }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    
+    </form>
+
+</body>
+
+</html>
