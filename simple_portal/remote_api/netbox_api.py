@@ -3,8 +3,10 @@ import json
 import requests
 from dotenv import load_dotenv
 
+load_dotenv()
 
-def netbox_create_vm(vm_name, vm_description):
+def netbox_create_vm(vm_name, vm_description, site_id=os.getenv('SITE_ID'), vm_status="active"):
+    
     load_dotenv()
 
     NETBOX_API_URL = os.getenv('NETBOX_API_URL')
@@ -18,8 +20,8 @@ def netbox_create_vm(vm_name, vm_description):
 
     payload = json.dumps({
         "name": vm_name,
-        "site": 16,
-        "status": "active",
+        "site": site_id,
+        "status": vm_status,
         "description": vm_description
         })
 
