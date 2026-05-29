@@ -31,3 +31,30 @@ def netbox_create_vm(vm_name, vm_description, site_id=os.getenv('SITE_ID'), vm_s
         return(f"ERROR : {create_vm.status_code}, {create_vm.text}")
     else  :
         return(f"VM created successfully : {create_vm.status_code}, {create_vm.text}")
+
+
+
+def netbox_get_sites():
+    
+    load_dotenv()
+
+    NETBOX_API_URL = os.getenv('NETBOX_API_URL')
+    NETBOX_API_TOKEN = os.getenv('NETBOX_API_TOKEN')
+    sites_endpoint = f"{NETBOX_API_URL}/api/dcim/sites/"
+
+    headers = {
+        "Authorization": f"Token {NETBOX_API_TOKEN}",
+        "Content-Type": "application/json",
+    }
+
+    get_sites = requests.get(sites_endpoint, headers=headers)
+
+    sites_list = []
+
+    for site in get_sites.json()['results']:
+        sites_list.append(f"({site['id']}){site['name']}")
+
+    if get_sites.status_code != 200:
+        return(f"ERROR : {get_sites.status_code}, {get_sites.text}")
+    else  :
+        return(sites_list)

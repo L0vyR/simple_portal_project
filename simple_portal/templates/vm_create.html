@@ -20,9 +20,10 @@
         </div>
         
         <div>
-            <select name="node">
-                {% for node in nodes %}
-                    <option value="{{ node }}">{{ node }}</option>
+            <label for="netbox_sites">Site: </label>
+            <select name="netbox_sites">
+                {% for site in netbox_sites %}
+                    <option value="{{ site }}">{{ site }}</option>
                 {% endfor %}
             </select>
         </div>
