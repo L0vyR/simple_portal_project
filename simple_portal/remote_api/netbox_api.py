@@ -51,10 +51,12 @@ def netbox_get_sites():
 
     sites_list = []
 
-    for site in get_sites.json()['results']:
-        sites_list.append(f"({site['id']}){site['name']}")
-
     if get_sites.status_code != 200:
-        return(f"ERROR : {get_sites.status_code}, {get_sites.text}")
-    else  :
-        return(sites_list)
+        sites_list.append("empty")
+        return sites_list
+
+
+    if get_sites.json()['results']:
+        for site in get_sites.json()['results']:
+            sites_list.append(f"({site['id']}){site['name']}")
+        return sites_list
