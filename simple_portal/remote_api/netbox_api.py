@@ -14,6 +14,7 @@ def netbox_create_vm(vm_name, vm_description, site_id=16, vm_status="active"):
         site=site_id,
         description=vm_description,
         status=vm_status)
+    
     return print(create_vm.id)
 
 
