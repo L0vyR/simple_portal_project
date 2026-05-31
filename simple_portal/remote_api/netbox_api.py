@@ -20,4 +20,10 @@ def netbox_create_vm(vm_name, vm_description, site_id=16, vm_status="active"):
 def netbox_get_sites():
     
     get_sites = list(NB_API.dcim.sites.all())
-    return get_sites
+
+    sites_select_list = []
+
+    for site in get_sites:
+        sites_select_list.append(f"{site.id}-{site.name}")
+    
+    return sites_select_list
