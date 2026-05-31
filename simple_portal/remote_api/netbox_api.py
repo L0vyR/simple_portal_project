@@ -3,20 +3,40 @@ import json
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
 
-def netbox_create_vm(vm_name, vm_description, site_id=os.getenv('SITE_ID'), vm_status="active"):
-    
+def netbox_api(method, endpoint, payload=None):
+
     load_dotenv()
 
-    NETBOX_API_URL = os.getenv('NETBOX_API_URL')
-    NETBOX_API_TOKEN = os.getenv('NETBOX_API_TOKEN')
-    vm_endpoint = f"{NETBOX_API_URL}/api/virtualization/virtual-machines/"
+    netbox_api_url = os.getenv('NETBOX_API_URL')
+    netbox_api_token = os.getenv('NETBOX_API_TOKEN')
+    headers = {"Authorization": f"Token {netbox_api_token}","Content-Type": "application/json"}
 
-    headers = {
-        "Authorization": f"Token {NETBOX_API_TOKEN}",
-        "Content-Type": "application/json",
+    api_endpoints = {
+        "virtualization":"/virtualization/virtual-machines/",
+        "dcim":"/dcim/sites/"
     }
+
+
+    generated_url = f"{netbox_api_url}{api_endpoints.get(endpoint)}"
+
+
+    if method.lower() == "post":
+        requests.post(generated_url, headers=headers, data=payload)
+        if create_vm.status_code != 201:
+            return(f"ERROR : {create_vm.status_code}, {create_vm.text}")
+    else  :
+        return(f"VM created successfully : {create_vm.status_code}, {create_vm.text}")
+    if method.lower() == "get" and payload == None:
+        return requests.get(generated_url, headers=headers)
+    if method.lower() == "get" and payload != None:
+        return requests.get(generated_url, headers=headers, data=payload)
+    
+
+
+def netbox_create_vm(vm_name, vm_description, site_id, vm_status="active"):
+    
+    load_dotenv()
 
     payload = json.dumps({
         "name": vm_name,
@@ -24,8 +44,8 @@ def netbox_create_vm(vm_name, vm_description, site_id=os.getenv('SITE_ID'), vm_s
         "status": vm_status,
         "description": vm_description
         })
-
-    create_vm = requests.post(vm_endpoint, headers=headers, data=payload)
+    
+    create_vm = netbox_api("post", "virtualization", payload)
 
     if create_vm.status_code != 201:
         return(f"ERROR : {create_vm.status_code}, {create_vm.text}")
