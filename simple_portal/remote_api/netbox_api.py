@@ -4,10 +4,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-NB_API = pynetbox.api(os.getenv('NETBOX_API_URL'), token=os.getenv('NETBOX_API_TOKEN'))
+NB_API = pynetbox.api(os.getenv('NETBOX_DOCKER_API_URL'), token=os.getenv('NETBOX_DOCKER_API_TOKEN'))
 
     
-def netbox_create_vm(vm_name, vm_description, site_id=16, vm_status="active"):
+def netbox_create_vm(vm_name, vm_description, vm_site, vm_status="active"):
+
+    get_sites = list(NB_API.dcim.sites.all())
+
+    sites_ids = {}
+
+    for site in get_sites:
+        sites_ids[site.name] = site.id
+
+    site_id = sites_ids.get(vm_site)
+    
 
     create_vm = NB_API.virtualization.virtual_machines.create(
         name=vm_name,
@@ -15,7 +25,7 @@ def netbox_create_vm(vm_name, vm_description, site_id=16, vm_status="active"):
         description=vm_description,
         status=vm_status)
     
-    return print(create_vm.id)
+    return "SUCCESS"
 
 
 def netbox_get_sites():
@@ -25,6 +35,6 @@ def netbox_get_sites():
     sites_select_list = []
 
     for site in get_sites:
-        sites_select_list.append(f"{site.id}-{site.name}")
+        sites_select_list.append(site.name)
     
     return sites_select_list

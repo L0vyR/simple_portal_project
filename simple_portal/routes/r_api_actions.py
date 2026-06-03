@@ -11,8 +11,8 @@ def create_vm():
 
     vm_name = request.form['vm_name']
     vm_description = request.form['vm_description']
-    vm_site = request.form['netbox_sites'].split("-")[0]
+    vm_site = request.form['netbox_sites']
     
-    netbox_create_vm(vm_name, vm_description, site_id=int(vm_site))
+    netbox_create_vm(vm_name, vm_description, vm_site)
     
     return "Success"
