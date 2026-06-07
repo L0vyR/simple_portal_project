@@ -18,23 +18,25 @@ def netbox_create_vm(vm_name, vm_description, vm_site, vm_status="active"):
 
     site_id = sites_ids.get(vm_site)
     
-
     create_vm = NB_API.virtualization.virtual_machines.create(
         name=vm_name,
         site=site_id,
         description=vm_description,
         status=vm_status)
     
-    return "SUCCESS"
+    return (create_vm.id)
 
 
 def netbox_get_sites():
     
-    get_sites = list(NB_API.dcim.sites.all())
+    try:
+        get_sites = list(NB_API.dcim.sites.all())
 
-    sites_select_list = []
+        sites_select_list = []
 
-    for site in get_sites:
-        sites_select_list.append(site.name)
+        for site in get_sites:
+            sites_select_list.append(site.name)
+    except:
+        sites_select_list = ["Unable to reach Netbox"]
     
     return sites_select_list
