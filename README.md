@@ -8,3 +8,10 @@ App is based on Flask framework.
 Create a virtual machine in Netbox
 -> vm_name
 -> vm_description
+
+The following python Library must be installed : 
+- Flask
+- dotenv
+- requests
+- pynetbox
+- proxmoxer
