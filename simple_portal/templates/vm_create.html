@@ -30,6 +30,14 @@
                 {% endfor %}
             </select>
         </div>
+
+        <div>
+            <label for="proxmox_nodes">Node: </label>
+            <select name="proxmox_nodes">
+                {% for node in proxmox_nodes %}
+                    <option value="{{ node }}">{{ node }}</option>
+                {% endfor %}
+        </div>
         
         <div>
             <button type="submit">Create</button>
