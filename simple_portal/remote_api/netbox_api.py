@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 NB_API = pynetbox.api(os.getenv('NETBOX_DOCKER_API_URL'), token=os.getenv('NETBOX_DOCKER_API_TOKEN'))
-
     
 def netbox_create_vm(vm_name, vm_description, vm_site, vm_status="active"):
 
