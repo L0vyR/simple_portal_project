@@ -2,39 +2,47 @@ const nodeSelect = document.getElementById("proxmox_nodes");
 const isoSelect = document.getElementById("proxmox_isos");
 
 
-async function IsoGet(node) {
-    
+async function isoGet(node) {
+
     const response = await fetch("/api/proxmox/isos", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            node: node
-        })
+        body: JSON.stringify({ node })
+    
     });
+
+    console.log(response);
 
     return await response.json();
 
 }
 
+async function isoLoad(node) {
 
-nodeSelect.addEventListener("change", async function () {
+    const data = await isoGet(node);
 
-    const selectedNode = nodeSelect.value;
-
-    const data = IsoGet(selectedNode);
+    console.log("Loading Iso");
 
     isoSelect.innerHTML = "";
 
     for (const iso of data) {
 
         const option = document.createElement("option");
-
         option.value = iso;
         option.textContent = iso;
-
+        
         isoSelect.appendChild(option);
     };
+
+};
+
+isoLoad(nodeSelect.value);
+
+nodeSelect.addEventListener("change", async function () {
+    
+    isoLoad(nodeSelect.value);
+
 });
 

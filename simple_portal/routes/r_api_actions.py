@@ -22,7 +22,9 @@ def create_vm():
 @api_actions_bp.route("/proxmox/isos", methods=["POST"])
 def get_isos():
 
-    node_name = request.form['proxmox_nodes']
+    data = request.get_json()
+
+    node_name = data["node"]
 
     iso_storages = proxmox_get_storage(node_name, storage_type="iso")
     
