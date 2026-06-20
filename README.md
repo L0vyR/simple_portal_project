@@ -42,7 +42,7 @@ Frontend interaction (HTML / JS / future React integration)
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/your-repo/simple-portal.git
+git clone https://github.com/L0vyR/simple_portal_project.git
 cd simple-portal
 
 python -m venv .venv
