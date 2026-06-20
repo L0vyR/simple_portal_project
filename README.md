@@ -6,6 +6,17 @@ Built with the **Flask framework**, this project aims to simplify infrastructure
 
 ---
 
+## 🧭 Goal of the project
+
+This project is mainly a learning and experimentation platform for:
+
+Flask backend architecture
+REST API integration
+Infrastructure automation
+Frontend interaction (HTML / JS / future React integration)
+
+---
+
 ## ⚙️ Current Version (v0)
 
 ### 🧪 Features
