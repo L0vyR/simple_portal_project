@@ -24,6 +24,7 @@ Frontend interaction (HTML / JS / future React integration)
 - Create a Virtual Machine entry in **NetBox**
   - VM Name
   - VM Description
+  - Retrieve available iso list from proxmox host
 
 ---
 
