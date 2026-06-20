@@ -38,3 +38,9 @@ def proxmox_get_isos(node_name, storage_list):
                 iso_list.append(iso['volid'].strip("local:iso/"))
 
     return iso_list
+
+def proxmox_vm_create(node, vmid, name):
+
+    new_vm = proxmox.nodes(node).qemu.post(vmid=vmid, name=name)
+
+    return new_vm

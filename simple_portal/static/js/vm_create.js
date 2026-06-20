@@ -4,7 +4,7 @@ const isoSelect = document.getElementById("proxmox_isos");
 
 async function isoGet(node) {
 
-    const response = await fetch("/api/proxmox/isos", {
+    const response = await fetch("/proxmox/node/storage/content/get", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
