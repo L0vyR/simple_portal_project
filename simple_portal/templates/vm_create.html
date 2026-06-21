@@ -13,42 +13,42 @@
     <h3>Netbox VM Registration</h3>
 
     <form method="POST" action="/api/netbox/virtualization/post">
-        <div>
+        <div class="form-group">
             <label for="vm_name">Name: </label>
-            <input id="vm_name" name="vm_name">
+            <input type="text" id="vm_name" name="vm_name" required>
         </div>
         
-        <div>
+        <div class="form-group">
             <label for="vm_description">Description: </label>
-            <input id="vm_description" name="vm_description">
+            <input type="text" id="vm_description" name="vm_description" required>
         </div>
         
-        <div>
+        <div class="form-group">
             <label for="netbox_sites">Site: </label>
-            <select id="netbox_sites" name="netbox_sites">
+            <select id="netbox_sites" name="netbox_sites" required>
                 {% for site in netbox_sites %}
                     <option value="{{ site }}">{{ site }}</option>
                 {% endfor %}
             </select>
         </div>
 
-        <div>
-            <label for="proxmox_nodes">Node: </label>
-            <select id="proxmox_nodes" name="proxmox_nodes">
+        <div class="form-group">
+            <label for="proxmox_nodes">Proxmox Node: </label>
+            <select id="proxmox_nodes" name="proxmox_nodes" required>
                 {% for node in proxmox_nodes %}
                     <option value="{{ node }}">{{ node }}</option>
                 {% endfor %}
             </select>
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="proxmox_isos">ISOs: </label>
             <select id="proxmox_isos" name="proxmox_isos">
                 <!-- Options will be populated dynamically based on the selected node -->
             </select>
         </div>
         
-        <div>
+        <div class="form-group">
             <button type="submit">Create</button>
         </div>
     

@@ -44,3 +44,10 @@ def proxmox_vm_create(node, vmid, name):
     new_vm = proxmox.nodes(node).qemu.post(vmid=vmid, name=name)
 
     return new_vm
+
+
+def proxmox_vm_get(node):
+
+    vm_list = proxmox.nodes(node).qemu.get()
+
+    return vm_list
