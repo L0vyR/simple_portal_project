@@ -17,6 +17,8 @@
 <body>
 
     <h1>Virtual Machine Creation</h1>
+    
+    
     <h3>Netbox VM Registration</h3>
 
     <form method="POST" action="/api/netbox/virtualization/post">
@@ -30,6 +32,16 @@
             <input type="text" id="vm_description" name="vm_description" required>
         </div>
         
+        <div class="form-group">
+            <label for="vm_nb_cpu">CPUs: </label>
+            <input type="text" id="vm_nb_cpu" name="vm_nb_cpu" required>
+        </div>
+
+        <div class="form-group">
+            <label for="vm_disk_size">Disk Space (GB): </label>
+            <input type="text" id="vm_disk_size" name="vm_disk_size" required>
+        </div>
+
         <div class="form-group">
             <label for="netbox_sites">Site: </label>
             <select id="netbox_sites" name="netbox_sites" required>

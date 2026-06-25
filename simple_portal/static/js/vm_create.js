@@ -3,20 +3,20 @@ const isoSelect = document.getElementById("proxmox_isos");
 
 
 async function isoGet(node) {
-
-    const response = await fetch("/api/proxmox/node/storage/content/get", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ node })
     
-    });
-
-    console.log(response);
-
-    return await response.json();
-
+        const response = await fetch("/api/proxmox/node/storage/content/get", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ node })
+        
+        });
+    
+        console.log(response);
+    
+        return await response.json();
+    
 }
 
 async function isoLoad(node) {
