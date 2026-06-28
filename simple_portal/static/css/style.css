@@ -1,12 +1,53 @@
 body {
+    background-color: #081b2a;
     font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #00f2d4;
+}
+
+hr {
+    margin-left: 0;
+    width: 430px;
+    color: #00f2d4;
 }
 
 form {
     width: 400px;
 }
 
+.proxmox_logo {
+    width: 400px;
+    height: 30px;
+    background: #eba34c;
+    border-radius: 0 15px 15px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.proxmox_logo img {
+    width: 100px;
+    height: 30px;
+
+}
+
+.proxmox_line {
+    margin-left: 0;
+    width: 430px;
+    color: #e8a70f;
+}
+
+.icon {
+    width: 100px;
+    height: 30px;
+
+}
+
 .form-group {
+    color: aliceblue;
     margin-bottom: 1rem;
 }
 
@@ -15,6 +56,7 @@ label {
     margin-bottom: 0.10rem;
 }
 
-input, select {
+input,
+select {
     width: 100%;
 }

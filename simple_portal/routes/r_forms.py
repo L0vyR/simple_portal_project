@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import render_template
 from simple_portal.remote_api.netbox_api import netbox_get_sites
-from simple_portal.remote_api.proxmox_api import proxmox_get_nodes
+from simple_portal.remote_api.proxmox_api import proxmox_get_nodes, proxmox_get_storage
 
 forms_bp = Blueprint("forms_bp", __name__,)
 

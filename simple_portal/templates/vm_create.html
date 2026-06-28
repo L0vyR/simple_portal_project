@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
+
     <script src="{{ url_for('static', filename='js/vm_create.js') }}" defer></script>
-    
+
     <title>Virtual Machine Creation</title>
 
 </head>
@@ -17,21 +17,22 @@
 <body>
 
     <h1>Virtual Machine Creation</h1>
-    
-    
-    <h3>Netbox VM Registration</h3>
 
-    <form method="POST" action="/api/netbox/virtualization/post">
+
+    <img src="{{ url_for('static', filename='img/logo_netbox_bright_teal.svg') }}" class="icon">
+    <hr>
+
+    <form method="POST" action="/api/vm/create">
         <div class="form-group">
             <label for="vm_name">Name: </label>
             <input type="text" id="vm_name" name="vm_name" required>
         </div>
-        
+
         <div class="form-group">
             <label for="vm_description">Description: </label>
             <input type="text" id="vm_description" name="vm_description" required>
         </div>
-        
+
         <div class="form-group">
             <label for="vm_nb_cpu">CPUs: </label>
             <input type="text" id="vm_nb_cpu" name="vm_nb_cpu" required>
@@ -46,31 +47,44 @@
             <label for="netbox_sites">Site: </label>
             <select id="netbox_sites" name="netbox_sites" required>
                 {% for site in netbox_sites %}
-                    <option value="{{ site }}">{{ site }}</option>
+                <option value="{{ site }}">{{ site }}</option>
                 {% endfor %}
             </select>
+        </div>
+
+
+        <div class="proxmox_logo">
+            <img src="{{ url_for('static', filename='img/proxmox_logo.svg') }}">
         </div>
 
         <div class="form-group">
             <label for="proxmox_nodes">Proxmox Node: </label>
             <select id="proxmox_nodes" name="proxmox_nodes" required>
                 {% for node in proxmox_nodes %}
-                    <option value="{{ node }}">{{ node }}</option>
+                <option value="{{ node }}">{{ node }}</option>
                 {% endfor %}
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="proxmox_isos">ISOs: </label>
-            <select id="proxmox_isos" name="proxmox_isos">
-                <!-- Options will be populated dynamically based on the selected node -->
-            </select>
+        <div class="iso_selection">
+            <div class="form-group">
+                <label for="iso_storage">ISO Bank : </label>
+                <select id="iso_storage" name="iso_storage">
+                    <!-- AUTO COMPLETE USING JS -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="proxmox_isos">select boot iso </label>
+                <select id="proxmox_isos" name="proxmox_isos">
+                    <!-- AUTO COMPLETE USING JS -->
+                </select>
+            </div>
         </div>
-        
+
         <div class="form-group">
             <button type="submit">Create</button>
         </div>
-    
+
     </form>
 
 </body>
