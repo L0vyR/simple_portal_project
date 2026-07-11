@@ -13,6 +13,14 @@ hr {
     color: #00f2d4;
 }
 
+li {
+    color: white;
+}
+
+p {
+    color: #00f2d4;
+}
+
 form {
     width: 400px;
 }

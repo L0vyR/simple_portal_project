@@ -4,21 +4,25 @@ const isoSelect = document.getElementById("proxmox_isos");
 
 
 async function isoStorageGet(node) {
+    try {
+        const response = await fetch("/api/proxmox/node/storage/get", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ node })
 
-    const response = await fetch("/api/proxmox/node/storage/get", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ node })
+        });
 
-    });
+        console.log(response);
 
-    console.log(response);
+        return await response.json();
 
-    return await response.json();
-
-};
+    } catch (error) {
+        console.error('Failed to fetch:', error);
+        throw error;
+    }
+}
 
 
 async function isoStorageLoad(node) {
@@ -41,7 +45,7 @@ async function isoStorageLoad(node) {
 };
 
 
-async function isoGet(node, storage) {
+async function isoGet(node, iso_storage) {
 
     const response = await fetch("/api/proxmox/node/storage/content/get", {
         method: "POST",
@@ -58,14 +62,13 @@ async function isoGet(node, storage) {
 
     console.log(response);
 
+
     return await response.json();
 
 }
 
-
-async function isoLoad(node) {
-
-    const data = await isoGet(node);
+async function isoLoad(node, iso_storage) {
+    const data = await isoGet(node, iso_storage);
 
     console.log("Loading Iso");
 
@@ -83,8 +86,11 @@ async function isoLoad(node) {
 };
 
 
-isoStorageLoad(nodeSelect.value)
+isoStorageLoad(nodeSelect.value);
 isoLoad(nodeSelect.value, isoStorageSelect.value);
+
+console.log("ISO STORAGE value : ", isoStorageSelect.value);
+console.log("Node select value : ", nodeSelect.value);
 
 isoStorageSelect.addEventListener("change", async function () {
 

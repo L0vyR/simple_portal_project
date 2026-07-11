@@ -1,11 +1,15 @@
 import os
 import pynetbox
+from simple_portal.http_settings import custom_http_session
 from dotenv import load_dotenv
 
 load_dotenv()
 
+
 NB_API = pynetbox.api(os.getenv('NETBOX_DOCKER_API_URL'), token=os.getenv('NETBOX_DOCKER_API_TOKEN'))
-    
+NB_API.http_session = custom_http_session(timeout=2)
+
+
 def netbox_create_vm(vm_name, vm_description, vm_site, vm_status="active"):
 
     get_sites = list(NB_API.dcim.sites.all())
