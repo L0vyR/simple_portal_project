@@ -9,17 +9,22 @@ api_actions_bp = Blueprint("api_actions", __name__, url_prefix='/api')
 
 @api_actions_bp.route("/vm/create", methods=["POST"])
 def create_vm():
+    
+    vm_netbox = netbox_create_vm(
+        request.form['vm_name'],
+        request.form['vm_description'],
+        request.form['netbox_sites']
+        )
 
-    vm_name = request.form['vm_name']
-    vm_description = request.form['vm_description']
-    vm_site = request.form['netbox_sites']
-    vm_cpu = request.form['vm_nb_cpus']
-    vm_disk_size = request.form['vm_disk_size']
+    vm_proxmox = proxmox_vm_create(
+        node = request.form["proxmox_nodes"],
+        vm_name = request.form['vm_name'],
+        vm_cpu = request.form['vm_nb_cpus'],
+        vm_disk_size = request.form['vm_disk_size'],
+        iso = f"{request.form['iso_storage']}:iso/{request.form['proxmox_isos']}"
+    )
     
-    vm_netbox = netbox_create_vm(vm_name, vm_description, vm_site)
-    vm_proxmox = proxmox_vm_create()
-    
-    return f"VM created: {vm_netbox}"
+    return f"{vm_netbox}\n{vm_proxmox}"
 
 
 @api_actions_bp.route("/proxmox/node/storage/get", methods=["POST"])

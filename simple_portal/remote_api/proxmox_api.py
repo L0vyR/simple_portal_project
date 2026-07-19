@@ -42,40 +42,49 @@ def proxmox_get_isos(node_name, storage):
     return iso_list
 
 
-def proxmox_vm_create(node, vm_name=None, vm_cpu=4, vm_disk_size=32, iso=None):
-
-    """
-
-    # Proxmox API parameters : ( Memo delete or move later )
-    
-    vmid=100 # Required (auto increment using nextid)
-    name="test-vm" # required
-    memory=2048 # optional (default : 2048)
-    cores=2 # optional (default : 2)
-    scsi0="local-lvm:32" # optional (default : 32)
-    ide2="file=local:iso/debian-12.11.iso,media=cdrom" # optional (no default value)
-    boot="order=ide2;scsi0" # optional (no default value)
+def proxmox_vm_create(*,
+    node = None,
+    vm_name = None,                         # name <- input from vm_create html form
+    vm_cpu = 4,                             # cores <- input from vm_create html form
+    vm_ram = 1024,                          # memory <- input from vm_create html form
+    vm_storage_location = "local-lvm",      # scsi0 -|<- input from vm_create html form
+    vm_disk_size = 32,                      # scsi0 -| <- input from vm_create html form
+    iso = None,                             # ide2
+    ):
     
     """
+    # Proxmox API basic parameters syntax for vm creation 
+    # Source : https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu (POST)
 
-    nextid = proxmox.cluster.nextid.get() # get next id available for vm
+    vmid = 100                                                # Required (auto increment possible using 'nextid')
+    name = "test-vm"                                          # required
+    cores = 2                                                 # optional (default : 2)
+    memory = 2048                                             # optional (default : 512 Mb)
+    scsi0 = "local-lvm:32"                                    # optional (default : 32)
+    ide2 = "file=local:iso/debian-12.11.iso,media=cdrom"      # optional (no default value)
+    boot = "order=ide2;scsi0"                                 # optional (no default value)
+    """
 
-    if vm_name == None: # if no name specified, vm is created with id based generated name
-        vm_name = f"VM-AUTO-{nextid}"
-
-    return proxmox.nodes(node).qemu.post(
-        vmid = nextid, 
-        name = vm_name,
-        cores = vm_cpu,
-        scsi0 = vm_disk_size
-
-    )
+    try:
+        nextid = proxmox.cluster.nextid.get()       # get available next id for vm
+        
+        if vm_name == None:                         # if no name specified, vm is created with id based generated name
+            vm_name = f"Auto-Generated-VM-{nextid}"
+        
+        return proxmox.nodes(node).qemu.post(
+            vmid = nextid,
+            name = vm_name,
+            memory = vm_ram,
+            cores = vm_cpu,
+            scsi0 = f"{vm_storage_location}:{vm_disk_size}",
+            ide2 = iso
+        )
+    
+    except Exception as e :
+        return f"[ ERROR ] : {e}"
 
 
 def proxmox_get_storages_nofilter(node_name):     
     
     return proxmox.nodes(node_name).storage.get()
 
-
-if __name__ == "__main__":
-    print("not in flask :3")
