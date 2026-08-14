@@ -1,8 +1,12 @@
 import os
+import logging
 from dotenv import load_dotenv
 from proxmoxer import ProxmoxAPI
 
+
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 proxmox = ProxmoxAPI(os.getenv('PROXMOX_HOST'),user=os.getenv('PROXMOX_USER'), password=os.getenv('PROXMOX_PASSWORD'), verify_ssl=False)
 
@@ -20,13 +24,16 @@ def proxmox_get_nodes():
 def proxmox_get_storage(node_name, storage_type="iso"): # storage_type can be "iso", "backup", "images"
     
     storage_list = []
+    try:    
+        for storage in proxmox.nodes(node_name).storage.get():
+
+            if storage_type in storage['content']:   # Only return storages that match the specified storage_type
+                storage_list.append(storage['storage'])
+
+        return storage_list
     
-    for storage in proxmox.nodes(node_name).storage.get():
-        
-        if storage_type in storage['content']:   # Only return storages that match the specified storage_type
-            storage_list.append(storage['storage'])
-    
-    return storage_list
+    except Exception as e :
+        return 
 
 
 def proxmox_get_isos(node_name, storage):
@@ -43,13 +50,13 @@ def proxmox_get_isos(node_name, storage):
 
 
 def proxmox_vm_create(*,
-    node = None,
-    vm_name = None,                         # name <- input from vm_create html form
-    vm_cpu = 4,                             # cores <- input from vm_create html form
-    vm_ram = 1024,                          # memory <- input from vm_create html form
-    vm_storage_location = "local-lvm",      # scsi0 -|<- input from vm_create html form
-    vm_disk_size = 32,                      # scsi0 -| <- input from vm_create html form
-    iso = None,                             # ide2
+    node = None,                            # target node (server)  ##
+    vm_name = None,                         # name                   #
+    vm_cpu = 4,                             # cores                  # 
+    vm_ram = 1024,                          # memory                 # inputs from : vm_create.html
+    vm_storage_location = "local-lvm",      # scsi0                  # 
+    vm_disk_size = 32,                      # scsi0                  #
+    iso = None,                             # ide2                  ##
     ):
     
     """
@@ -65,13 +72,15 @@ def proxmox_vm_create(*,
     boot = "order=ide2;scsi0"                                 # optional (no default value)
     """
 
+    # * MISSING : Add preliminary vm existence check before executing statements bellow
+
     try:
         nextid = proxmox.cluster.nextid.get()       # get available next id for vm
         
         if vm_name == None:                         # if no name specified, vm is created with id based generated name
             vm_name = f"Auto-Generated-VM-{nextid}"
         
-        return proxmox.nodes(node).qemu.post(
+        proxmox_post_vm = proxmox.nodes(node).qemu.post(
             vmid = nextid,
             name = vm_name,
             memory = vm_ram,
@@ -79,12 +88,8 @@ def proxmox_vm_create(*,
             scsi0 = f"{vm_storage_location}:{vm_disk_size}",
             ide2 = iso
         )
-    
+
+        return proxmox_post_vm 
+
     except Exception as e :
         return f"[ ERROR ] : {e}"
-
-
-def proxmox_get_storages_nofilter(node_name):     
-    
-    return proxmox.nodes(node_name).storage.get()
-
