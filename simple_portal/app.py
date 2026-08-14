@@ -1,12 +1,20 @@
-from flask import Flask
-from flask import render_template
-from simple_portal.routes.r_api_actions import api_actions_bp
+import logging
+from flask import Flask, render_template
 from simple_portal.routes.r_forms import forms_bp
+from simple_portal.routes.r_api_actions import api_actions_bp
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
+
 
 app = Flask(__name__)
 
 app.register_blueprint(api_actions_bp)
 app.register_blueprint(forms_bp)
+
 
 @app.route("/")
 def menu_page():
