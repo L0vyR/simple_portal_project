@@ -1,4 +1,4 @@
-# Simple Portal
+# ProxBox
 
 A lightweight Python web portal to interact with **NetBox (DCIM)** and **Proxmox VE APIs** through a simple web interface.
 
