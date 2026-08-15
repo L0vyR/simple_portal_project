@@ -2,6 +2,11 @@
 
 A lightweight Python web portal to interact with **NetBox (DCIM)** and **Proxmox VE APIs** through a simple web interface.
 
+<p align="center">
+  <img src="docs/proxbox_v0.0.3.png" alt="proxbox UI">
+</p>
+
+
 ## Goal of the project
 
 This project is mainly a learning and experimentation platform for:
