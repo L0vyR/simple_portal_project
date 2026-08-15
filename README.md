@@ -1,34 +1,21 @@
-# 🚀 Simple Portal
+# Simple Portal
 
-A lightweight Python web portal to interact with **NetBox (DCIM)** and **Proxmox VE APIs** through a simple and unified interface.
+A lightweight Python web portal to interact with **NetBox (DCIM)** and **Proxmox VE APIs** through a simple web interface.
 
-Built with the **Flask framework**, this project aims to simplify infrastructure operations via a web UI.
-
----
-
-## 🧭 Goal of the project
+## Goal of the project
 
 This project is mainly a learning and experimentation platform for:
 
-Flask backend architecture
-REST API integration
-Infrastructure automation
-Frontend interaction (HTML / JS / future React integration)
+- Flask backend architecture
+- REST API integration
+- Infrastructure automation
+- Frontend interaction (HTML / JS / future React integration)
 
----
+##  Features (Alpha)
 
-## ⚙️ Current Version (v0)
+- Add new Virtual Machine simultaneously in Netbox and proxmox. 
 
-### 🧪 Features
-
-- Create a Virtual Machine entry in **NetBox**
-  - VM Name
-  - VM Description
-  - Retrieve available iso list from proxmox host
-
----
-
-## 🏗️ Tech Stack
+## ⚙️ Requirements
 
 - Python 3.x
 - Flask
@@ -36,15 +23,3 @@ Frontend interaction (HTML / JS / future React integration)
 - python-dotenv
 - pynetbox
 - proxmoxer
-
----
-
-## 📦 Installation
-
-```bash
-git clone https://github.com/L0vyR/simple_portal_project.git
-cd simple-portal
-
-python -m venv .venv
-source .venv/bin/activate  # on Linux/Mac
-.venv\Scripts\activate   # on Windows
