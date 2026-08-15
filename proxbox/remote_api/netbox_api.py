@@ -1,6 +1,6 @@
 import os
 import pynetbox
-from simple_portal.http_settings import custom_http_session
+from proxbox.http_settings import custom_http_session
 from dotenv import load_dotenv
 
 load_dotenv()

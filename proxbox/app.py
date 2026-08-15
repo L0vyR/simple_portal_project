@@ -1,7 +1,7 @@
 import logging
 from flask import Flask, render_template
-from simple_portal.routes.r_forms import forms_bp
-from simple_portal.routes.r_api_actions import api_actions_bp
+from proxbox.routes.r_forms import forms_bp
+from proxbox.routes.r_api_actions import api_actions_bp
 
 
 logging.basicConfig(

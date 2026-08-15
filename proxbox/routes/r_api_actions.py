@@ -1,7 +1,7 @@
 import logging
 from flask import Blueprint, request, render_template
-from simple_portal.remote_api.netbox_api import netbox_create_vm
-from simple_portal.remote_api.proxmox_api import proxmox_get_isos, proxmox_get_storage, proxmox_vm_create
+from proxbox.remote_api.netbox_api import netbox_create_vm
+from proxbox.remote_api.proxmox_api import proxmox_get_isos, proxmox_get_storage, proxmox_vm_create
 
 
 logger = logging.getLogger(__name__)
