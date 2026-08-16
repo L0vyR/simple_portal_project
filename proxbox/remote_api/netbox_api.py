@@ -10,6 +10,13 @@ NB_API = pynetbox.api(os.getenv('NETBOX_DOCKER_API_URL'), token=os.getenv('NETBO
 NB_API.http_session = custom_http_session(timeout=2)
 
 
+def get_vm(vm_name):
+    
+    vm_search_result = nb_api.virtualization.virtual_machines.get(name=vm_name)
+    
+    return vm_search_result
+
+
 def netbox_create_vm(name, description, site, status="active"):
 
     site_id = NB_API.dcim.sites.get(name=site).id
